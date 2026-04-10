@@ -42,10 +42,10 @@ class SpritePreview(QMainWindow):
 
     def setupUI(self):
         central = QFrame()
-        main_layout = QBoxLayout(central)
+        main_layout = QVBoxLayout(central)
 
         # SPRITE LABEL #
-        self.sprite_label =QLabel
+        self.sprite_label =QLabel()
         self.sprite_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.sprite_label.setMinimumSize(200, 200)
         if self.frames:
