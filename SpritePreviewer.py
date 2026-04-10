@@ -31,6 +31,13 @@ class SpritePreview(QMainWindow):
         # This loads the provided sprite and would need to be changed for your own.
         self.num_frames = 21
         self.frames = load_sprite('spriteImages',self.num_frames)
+
+        self.current_frame = 0
+        self.is_animating = False
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.advance_frame)
+
         self.setupUI()
 
     def setupUI(self):
@@ -66,13 +73,36 @@ class SpritePreview(QMainWindow):
 
         # START/STOP #
         self.start_stop_btn = QPushButton("Start")
+        self.start_stop_btn.clicked.connect(self.toggle_animation)
         main_layout.addWidget(self.start_stop_btn)
 
         self.setCentralWidget(central)
 
     def on_fps_changed(self, value):
         self.fps_value_label.setText(str(value))
+        if self.is_animating:
+            self.timer.setInterval(int(1000 / value))
 
+    def advance_frame(self):
+        self.current_frame = (self.current_frame + 1) % self.num_frames
+        self.sprite_label.setPixmap(
+            self.frames[self.current_frame].scaled(
+                200, 200,
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.FastTransformation
+            )
+        )
+
+    def toggle_animation(self):
+        if not self.is_animating:
+            fps = self.fps_slider.value()
+            self.timer.start(int(1000 / fps))
+            self.is_animating = True
+            self.start_stop_btn.setText("Stop")
+        else:
+            self.timer.stop()
+            self.is_animating = False
+            self.start_stop_btn.setText("Start")
 
 def main():
     app = QApplication([])
