@@ -41,6 +41,18 @@ class SpritePreview(QMainWindow):
         self.setupUI()
 
     def setupUI(self):
+        # MENU #
+        menu_bar = self.menuBar()
+        file_menu = menu_bar.addMenu('&File')
+
+        pause_action = QAction('Pause', self)
+        pause_action.triggered.connect(self.pause_animation)
+        file_menu.addAction(pause_action)
+
+        exit_action = QAction('Exit', self)
+        exit_action.triggered.connect(QApplication.quit)
+        file_menu.addAction(exit_action)
+
         central = QFrame()
         main_layout = QVBoxLayout(central)
 
@@ -103,6 +115,12 @@ class SpritePreview(QMainWindow):
             self.timer.stop()
             self.is_animating = False
             self.start_stop_btn.setText("Start")
+
+    def pause_animation(self):
+        if self.is_animating:
+            self.timer.stop()
+            self.is_animating = False
+            self.start_stop_btn.setText("Pause")
 
 def main():
     app = QApplication([])
