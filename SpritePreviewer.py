@@ -31,27 +31,38 @@ class SpritePreview(QMainWindow):
         # This loads the provided sprite and would need to be changed for your own.
         self.num_frames = 21
         self.frames = load_sprite('spriteImages',self.num_frames)
-
-        # Add any other instance variables needed to track information as the program
-        # runs here
-
-        # Make the GUI in the setupUI method
         self.setupUI()
 
-
     def setupUI(self):
-        # An application needs a central widget - often a QFrame
-        frame = QFrame()
+        central = QFrame()
+        main_layout = QBoxLayout(central)
 
-        # Add a lot of code here to make layouts, more QFrame or QWidgets, and
-        # the other components of the program.
-        # Create needed connections between the UI components and slot methods
-        # you define in this class.
+        # SPRITE LABEL #
+        self.sprite_label =QLabel
+        self.sprite_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.sprite_label.setMinimumSize(200, 200)
+        if self.frames:
+            self.sprite_label.setPixmap(
+                self.frames[0].scaled(200, 200, Qt.AspectRatioMode.KeepAspectRatio,
+                                        Qt.TransformationMode.FastTransformation)
+                )
+        main_layout.addWidget(self.sprite_label, alignment=Qt.AlignmentFlag.AlignHCenter)
 
-        self.setCentralWidget(frame)
+        # FPS LABEL #
+        fps_title =  QLabel("Frames per second")
+        main_layout.addWidget(fps_title)
 
+        self.fps_slider = QSlider(Qt.Orientation.Horizontal)
+        self.fps_slider.setMinimum(1)
+        self.fps_slider.setMaximum(100)
+        self.fps_slider.setValue(12)
+        main_layout.addWidget(self.fps_slider)
 
-    # You will need methods in the class to act as slots to connect to signals
+        # START/STOP #
+        self.start_stop_btn = QPushButton("Start")
+        main_layout.addWidget(self.start_stop_btn)
+
+        self.setCentralWidget(central)
 
 
 def main():
