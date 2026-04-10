@@ -4,6 +4,14 @@ from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 
+'''Document your development effort by making at least 4 commits and pushes to the GitHub repo 
+as you write your code with some reasonable time and difference in the code between pushes.'''
+'''Commits: 1/4'''
+
+# Code by Annabelle Boyd
+# U156172
+# https://github.com/RitzyBitsy1/Sprite-Previewer
+
 # This function loads a series of sprite images stored in a folder with a
 # consistent naming pattern: sprite_# or sprite_##. It returns a list of the images.
 def load_sprite(sprite_folder_name, number_of_frames):
