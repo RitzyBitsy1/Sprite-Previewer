@@ -56,13 +56,22 @@ class SpritePreview(QMainWindow):
         self.fps_slider.setMinimum(1)
         self.fps_slider.setMaximum(100)
         self.fps_slider.setValue(12)
+        self.fps_slider.setTickPosition(QSlider.TickPosition.TicksBothSides)
+        self.fps_slider.setTickInterval(10)
+        self.fps_slider.valueChanged.connect(self.on_fps_changed)
         main_layout.addWidget(self.fps_slider)
+
+        self.fps_value_label = QLabel("12")
+        main_layout.addWidget(self.fps_value_label)
 
         # START/STOP #
         self.start_stop_btn = QPushButton("Start")
         main_layout.addWidget(self.start_stop_btn)
 
         self.setCentralWidget(central)
+
+    def on_fps_changed(self, value):
+        self.fps_value_label.setText(str(value))
 
 
 def main():
